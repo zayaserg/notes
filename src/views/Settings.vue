@@ -1,61 +1,85 @@
 <template>
-  <div
-    class="container mx-auto w-1/3 p-6 bg-white flex flex-col shadow rounded items-center justify-center"
-  >
-    <div class="p-4 flex">
-      <div class="form_radio mx-4">
-        <!-- v-model="store" -->
+  <div class="settings container">
+    <div class="settings-wrapper">
+      <div class="form-radio">
         <input
-          v-model="storeMethod"
-          id="localStorage"
+          v-model="method"
+          id="local"
           type="radio"
           name="radio"
-          value="localStorage"
-          class="cursor-pointer"
+          value="local"
+          class="settings__input"
           checked
         />
-        <label for="localStorage" class="ml-2">Local Storage</label>
+        <label for="local" class="ml-2">Local Storage</label>
       </div>
 
       <div class="form_radio mx-4">
         <input
-          v-model="storeMethod"
+          v-model="method"
           id="firebase"
           type="radio"
           name="radio"
           value="firebase"
-          class="cursor-pointer"
+          class="settings__input"
         />
         <label for="firebase" class="ml-2">Firebase</label>
       </div>
     </div>
-    <button
-      type="submit"
-      class="px-4 py-2 text-blue-500 border border-blue-500 rounded focus:outline-none hover:bg-blue-500 hover:text-white hover:shadow"
-      @click="changeStoreMethod"
-    >
+    <button type="submit" class="settings__button" @click="changeStoreMethod">
       Зберегти
     </button>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      storeMethod: ""
+      method: ""
     };
+  },
+  computed: {
+    ...mapGetters(["storeMethod"])
   },
   methods: {
     async changeStoreMethod() {
-      this.$store.state.storeMethod = this.storeMethod;
-      await this.$store.dispatch("setNotes");
+      await this.$store.dispatch("changeStoreMethod", this.method);
+      await this.$store.dispatch(`${this.storeMethod}/setNotes`);
     }
   },
   created() {
-    this.storeMethod = this.$store.state.storeMethod;
+    this.method = this.storeMethod;
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.settings {
+  @apply mx-auto w-1/3 p-6 bg-white flex flex-col shadow rounded items-center justify-center;
+
+  &-wrapper {
+    @apply p-4 flex;
+  }
+
+  &__input {
+    @apply cursor-pointer;
+  }
+
+  &__button {
+    @apply px-4 py-2 text-blue-500 border border-blue-500 rounded;
+
+    &:hover {
+      @apply bg-blue-500 text-white shadow;
+    }
+
+    &:focus {
+      @apply outline-none;
+    }
+  }
+}
+.form-radio {
+  @apply mx-4;
+}
+</style>

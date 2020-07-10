@@ -28,11 +28,10 @@ export default {
   },
   async created() {
     this.$router.push("/");
-    const processes = ["getNotes"];
+    const processes = ["firebase/getNotes"];
     await Promise.all(
       processes.map(async process => {
-        const data = await this.$store.dispatch(process);
-        console.log(process, data);
+        await this.$store.dispatch(process);
       })
     );
     this.isLoading = false;

@@ -1,8 +1,12 @@
 module.exports = {
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      maxHeight: {
+        "50vh": "50vh"
+      }
+    }
   },
   variants: {},
-  plugins: [],
-}
+  plugins: []
+};
