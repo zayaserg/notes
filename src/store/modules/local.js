@@ -3,10 +3,10 @@ export const namespaced = true;
 export const state = {};
 export const mutations = {};
 export const actions = {
-  async setNotes() {
+  setNotes() {
     localStorage.setItem("notes", JSON.stringify(this.state.notes));
   },
-  async getNotes({ commit }) {
+  getNotes({ commit }) {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     commit("SET_NOTES", notes, { root: true });
     return true;

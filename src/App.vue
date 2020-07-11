@@ -12,7 +12,7 @@
         <router-link to="/">Замітки</router-link> |
         <router-link to="/create">Створити</router-link> |
         <router-link to="/settings">Налаштування</router-link> |
-        {{ this.$store.state.storeMethod }}
+        {{ storeMethod }}
       </div>
       <router-view />
     </div>
@@ -25,6 +25,11 @@ export default {
     return {
       isLoading: true
     };
+  },
+  computed: {
+    storeMethod() {
+      return this.$store.getters.storeMethod;
+    }
   },
   async created() {
     this.$router.push("/");

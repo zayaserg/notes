@@ -34,11 +34,6 @@ export default {
   computed: {
     ...mapGetters(["storeMethod", "notes"])
   },
-  watch: {
-    "$store.state.notes": function(newVal) {
-      this.notes = newVal;
-    }
-  },
   methods: {
     async deleteNote(id) {
       await this.$store.dispatch(`${this.storeMethod}/deleteNote`, id);
